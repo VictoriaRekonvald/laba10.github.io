@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Рулетка</title>
+  <style>
+    body{
+  width: 99%;
+  height: 100%;
+  font-size: 60px;}
+
+button{
+  background-color: rgb(116, 116, 219);
+  font-size: 50px;
+  margin-top: 10px;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Startgames{
+  background-repeat: no-repeat;
+  justify-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+  width: 550px;
+  height: 520px;  
+  margin-top: 20px;
+}
+
+.card{
+  background-image:url("lemon.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 160px;
+  width: 160px;}
+</style>
+</head>
+<body>
+<div class="content">
+  <div class = "UserName">Ігрок</div>
+  <div>Спроба <font id="amount">0</font> із 3</div>
+  <div class = "Start">
+    <button type="button" name="button">Generate</button>
+  </div>
+  <div class = "Startgames" id="games">
+    <div class = "card" id="card1"></div>
+    <div class = "card" id="card2"></div>
+    <div class = "card" id="card3"></div>
+
+    <div class = "card" id="card4"></div>
+    <div class = "card" id="card5"></div>
+    <div class = "card" id="card6"></div>
+
+    <div class = "card" id="card7"></div>
+    <div class = "card" id="card8"></div>
+    <div class = "card" id="card9"></div>
+  </div>
+</div>
+<script>
+let userName = prompt('Please, enter your name:');
+
+let name = document.querySelector('.UserName');
+name.innerHTML = userName;
+
+const btn = document.querySelector('button');
+const gameamount = document.querySelector('#amount');
+
+var amountofgame = 0;
+
+function CardGame(X,cards){
+  switch (X) {
+    case 1:
+    cards.style.backgroundImage="url('lemon.png')";
+      break;
+    case 2:
+    cards.style.backgroundImage="url('diamond.png')";
+      break;
+    case 3:
+    cards.style.backgroundImage = "url('cherry.png')";
+      break;
+      case 4:
+      cards.style.backgroundImage = "url('banana.png')";
+      break;
+    default:
+      console.error();
+  }
+}
+
+var arr = [];
+var card = document.getElementsByClassName("card")
+btn.addEventListener('click', () =>{
+  for (var i = 0; i < 9; i++) {
+    arr[i] = randomInteger(1, 3);
+    CardGame(arr[i], card[i]);
+  }
+
+  setTimeout(WinnerIngame, 100, arr[0], arr[1], arr[2]);
+  setTimeout(WinnerIngame, 100, arr[3], arr[4], arr[5]);
+  setTimeout(WinnerIngame, 100, arr[6], arr[7], arr[9]);
+
+  setTimeout(WinnerIngame, 100, arr[0], arr[3], arr[6]);
+  setTimeout(WinnerIngame, 100, arr[1], arr[4], arr[7]);
+  setTimeout(WinnerIngame, 100, arr[2], arr[5], arr[8]);
+
+  amountofgame++;
+  gameamount.innerHTML = amountofgame;
+
+  setTimeout(Check, 100);
+});
+function randomInteger(min, max) {
+  let random = min - 0.5 + Math.random() * (max - min + 1);
+  return Math.round(random);
+}
+function Check(){
+  if (amountofgame==3) {
+    setTimeout(alert('Ви програли!', 100));
+    setTimeout(location.reload(), 100);
+
+  }
+}
+function WinnerIngame(x, y, z){
+  if (x==y&&y==z) {
+    alert('Вітаю!');
+    setTimeout(location.reload(), 100);
+  }
+}
+
+</script>
+</body>
+</html>
+
